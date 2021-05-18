@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sanctum/widgets/item_tile.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_sanctum/pages/pages.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -9,17 +9,27 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          ItemTile(title: 'Rui Paulo Calei', click: (){}),
-          ItemTile(
-            title: 'Products',
-            click: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Container()));
-            },
+          ListTile(
+            title: Text(
+              'Rui Paulo Calei',
+              style: TextStyle(fontSize: 18),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          ItemTile(
-            title: 'Login',
-            click: () {},
+          ListTile(
+            title: Text(
+              'Login',
+              style: TextStyle(fontSize: 18),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginPage()));
+            },
           ),
         ],
       ),
