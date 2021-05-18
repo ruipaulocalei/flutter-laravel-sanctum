@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sanctum/widgets/app_drawer.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,17 +11,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Rui Paulo Calei'),
+          title: const Text('Rui Calei'),
         ),
+        drawer: AppDrawer(),
         body: Center(
-          child: Text('Flutter Is Awesome'),
+          child: Text('You are not logged in'),
         ),
+
       ),
     );
   }

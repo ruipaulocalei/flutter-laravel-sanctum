@@ -2,6 +2,7 @@
     package="ruipaulocalei.developer.flutter_sanctum">
    <application
         android:label="flutter_sanctum"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
