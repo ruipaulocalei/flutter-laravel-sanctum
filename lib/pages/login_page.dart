@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sanctum/models/message_result.dart';
 import 'package:flutter_sanctum/models/user_model.dart';
+import 'package:flutter_sanctum/pages/home_page.dart';
 import 'package:flutter_sanctum/providers/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,8 @@ class LoginPage extends StatelessWidget {
     if(response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message),
         backgroundColor: Colors.green,));
-      Navigator.pop(context);
+      Navigator.pop(context, true);
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message),
         backgroundColor: Colors.red,));
@@ -41,7 +43,7 @@ class LoginPage extends StatelessWidget {
           child: Form(
             key: _formKey,
             child: Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
               child: Column(
                 children: [
                   TextFormField(

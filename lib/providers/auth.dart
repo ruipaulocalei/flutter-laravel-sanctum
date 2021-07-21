@@ -12,12 +12,19 @@ import 'package:flutter_sanctum/network/dio.dart';
 class Auth extends ChangeNotifier {
   bool _authenticated = false;
   UserModel? _userModel;
+  bool isLoading = false;
   final storage = FlutterSecureStorage();
   UserModel? get user => _userModel;
 
   bool get authenticated => _authenticated;
 
+  void setLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
+
   Future<MessageResult> login(UserModel user) async {
+    setLoading(true);
       final data = {
         'username': user.username,
         'password': user.password,
@@ -29,10 +36,13 @@ class Auth extends ChangeNotifier {
         String token = loginResponse.token;
         await attempt(token);
         await storeToken(token);
+        setLoading(false);
         return MessageResult('Login efectuado com sucesso', response.statusCode!.toInt());
       } else {
+        setLoading(false);
         return MessageResult('Por favor verifique o teu e-mail e senha', response.statusCode!.toInt());
       }
+
   }
 
   Future attempt(String token) async {
