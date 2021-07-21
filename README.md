@@ -1,3 +1,3 @@
-# Flutter Consuming Laravel API
+# Flutter Consuming Django API
 
 
