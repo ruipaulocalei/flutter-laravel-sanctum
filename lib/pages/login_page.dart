@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sanctum/models/user_model.dart';
+import 'package:flutter_sanctum/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  late String _email;
-  late String _password;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final user = UserModel();
+  final _usernameCtrl = TextEditingController();
+  final _passwordCtrl = TextEditingController();
 
-  void submit() {
-    debugPrint(_email);
-    debugPrint(_password);
+  void submit(BuildContext context) {
+    Provider.of<Auth>(context, listen: false).login(
+      UserModel(username: _usernameCtrl.text, password: _passwordCtrl.text)
+    );
+    Navigator.pop(context);
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Login'),
+        elevation: 0,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -27,21 +36,41 @@ class LoginPage extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
-                    onSaved: (value) => _email = value!,
+                    // initialValue: 'rui',
+                    controller: _usernameCtrl,
+                    onSaved: (value) => _usernameCtrl.text = value!,
+                    validator: (value) => value!.isEmpty ? 'Fill the field': null,
                     decoration: InputDecoration(
                         labelText: 'E-mail', hintText: 'youremail@mail.com'),
                   ),
                   TextFormField(
-                    onSaved: (value) => _password = value!,
+                    // initialValue: 'love1912',
+                    controller: _passwordCtrl,
+                    onSaved: (value) => _passwordCtrl.text = value!,
+                    validator: (value) => value!.isEmpty ? 'Fill the field': null,
+                    obscureText: true,
                     decoration: InputDecoration(
-                        labelText: 'Password', hintText: 'At least 8 characters'),
+                        labelText: 'Password',
+                        hintText: 'At least 8 characters'),
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        _formKey.currentState!.save();
-                        this.submit();
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all(
+                            EdgeInsets.all(12),
+                          ),
+                          textStyle: MaterialStateProperty.all(
+                            TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                      onPressed: (){
+                        if(_formKey.currentState!.validate()) {
+                          this.submit(context);
+                          _formKey.currentState!.save();
+                        }
                       },
                       child: Text('Login'),
                     ),
