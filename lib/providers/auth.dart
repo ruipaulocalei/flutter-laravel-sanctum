@@ -31,6 +31,7 @@ class Auth extends ChangeNotifier {
       };
       Dio.Response response =
       await dio().post('user/login/', data: jsonEncode(data));
+      await Future.delayed(Duration(seconds: 2));
       if (response.statusCode == 200) {
         final loginResponse = loginResponseFromJson(response.toString());
         String token = loginResponse.token;

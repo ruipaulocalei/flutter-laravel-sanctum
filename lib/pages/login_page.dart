@@ -29,6 +29,7 @@ class LoginPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<Auth>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -64,6 +65,7 @@ class LoginPage extends StatelessWidget {
                         labelText: 'Password',
                         hintText: 'At least 8 characters'),
                   ),
+                  SizedBox(height: 30,),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -77,13 +79,13 @@ class LoginPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                           )),
-                      onPressed: (){
+                      onPressed: authProvider.isLoading ? null : (){
                         if(_formKey.currentState!.validate()) {
                           this.submit(context);
                           _formKey.currentState!.save();
                         }
                       },
-                      child: Text('Login'),
+                      child: authProvider.isLoading? CircularProgressIndicator() : Text('Login'),
                     ),
                   )
                 ],
