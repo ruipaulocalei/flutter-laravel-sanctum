@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sanctum/models/message_result.dart';
 import 'package:flutter_sanctum/models/user_model.dart';
 import 'package:flutter_sanctum/providers/auth.dart';
 import 'package:provider/provider.dart';
@@ -10,11 +11,19 @@ class LoginPage extends StatelessWidget {
   final _usernameCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
 
-  void submit(BuildContext context) {
-    Provider.of<Auth>(context, listen: false).login(
+  Future<void> submit(BuildContext context) async{
+    var result = Provider.of<Auth>(context, listen: false);
+    var response = await result.login(
       UserModel(username: _usernameCtrl.text, password: _passwordCtrl.text)
     );
-    Navigator.pop(context);
+    if(response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message),
+        backgroundColor: Colors.green,));
+      Navigator.pop(context);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.message),
+        backgroundColor: Colors.red,));
+    }
   }
   @override
   Widget build(BuildContext context) {

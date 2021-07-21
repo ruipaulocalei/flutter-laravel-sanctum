@@ -4,6 +4,7 @@ import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_sanctum/models/login_response.dart';
+import 'package:flutter_sanctum/models/message_result.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_sanctum/models/user_model.dart';
 import 'package:flutter_sanctum/network/dio.dart';
@@ -16,8 +17,7 @@ class Auth extends ChangeNotifier {
 
   bool get authenticated => _authenticated;
 
-  Future<void> login(UserModel user) async {
-    try{
+  Future<MessageResult> login(UserModel user) async {
       final data = {
         'username': user.username,
         'password': user.password,
@@ -29,10 +29,10 @@ class Auth extends ChangeNotifier {
         String token = loginResponse.token;
         await attempt(token);
         await storeToken(token);
+        return MessageResult('Login efectuado com sucesso', response.statusCode!.toInt());
+      } else {
+        return MessageResult('Por favor verifique o teu e-mail e senha', response.statusCode!.toInt());
       }
-    } catch(e) {
-      debugPrint(e.toString());
-    }
   }
 
   Future attempt(String token) async {

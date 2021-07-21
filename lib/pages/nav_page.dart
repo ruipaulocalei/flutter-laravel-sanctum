@@ -36,7 +36,7 @@ class _NavPageState extends State<NavPage> {
       length: _icons.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Rui Calei'),
+          title: const Text('Shop'),
         ),
         drawer: AppDrawer(),
         body: IndexedStack(index: _selectedIndex, children: _pages),

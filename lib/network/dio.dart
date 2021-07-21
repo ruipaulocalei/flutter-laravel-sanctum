@@ -7,6 +7,8 @@ Dio dio() {
   var dio = Dio(BaseOptions(
       baseUrl: 'http://10.0.2.2:8000/api/',
       responseType: ResponseType.json,
+      validateStatus: (status) => status! < 500,
+      followRedirects: false,
       headers: {
         'accept': 'application/json',
         'content-type': 'application/json',
